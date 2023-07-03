@@ -25,11 +25,14 @@ public class Order
     /// <summary>
     /// Private constructor - parameterless is needed for the XmlSerializer.
     /// </summary>
+    ///
+    #pragma warning disable CS8618
     private Order()
     {
         
     }
-
+    #pragma warning restore CS8618
+    
     public void Export(IExportStrategy exportService)
     {
         if (exportService is null)
@@ -40,12 +43,13 @@ public class Order
         exportService.Export(this);
     }
 
-    public void NotifyWhenReady()
+    public async Task NotifyWhenReady()
     {
         if (NotificationStrategy is null)
         {
             Console.WriteLine("No notification service provided.");
+            return;
         }
-        NotificationStrategy.SendNotification($"Ordered {ItemName} x {Amount}");
+        await NotificationStrategy.SendNotification($"Ordered {ItemName} x {Amount}");
     }
 }

@@ -3,6 +3,7 @@ namespace PatternsNotebook.Behavioral.Singleton.BadExamples;
 // This implementation improves performance, as it doesn't need to be locked that often
 public sealed class BetterLockedSingleton
 {
+    #pragma warning disable CS8618
     private static BetterLockedSingleton _instance;
     private static readonly object padlock = new object(); 
 
@@ -24,4 +25,6 @@ public sealed class BetterLockedSingleton
 
     private BetterLockedSingleton()
     { }
+    
+    #pragma warning restore CS8618
 }

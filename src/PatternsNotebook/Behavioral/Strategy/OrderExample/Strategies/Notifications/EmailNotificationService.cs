@@ -25,13 +25,13 @@ public class EmailNotificationService : INotificationStrategy
         _toAddr = "to@example.com";
     }
     
-    public void SendNotification(string data)
+    public async Task SendNotification(string data)
     {
         var client = new SmtpClient(_host, _port)
         {
             Credentials = new NetworkCredential(_userName, _userPass),
             EnableSsl = true
         };
-        client.Send(_fromAddr, _toAddr, SUBJECT_MSG, data);
+        await client.SendMailAsync(_fromAddr, _toAddr, SUBJECT_MSG, data);
     }
 }

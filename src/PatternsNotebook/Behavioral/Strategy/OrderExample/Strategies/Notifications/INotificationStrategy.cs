@@ -2,7 +2,7 @@ namespace PatternsNotebook.Behavioral.Strategy.OrderExample.Strategies.Notificat
 
 public interface INotificationStrategy
 {
-    void SendNotification(string data);
+    Task SendNotification(string data);
 
     public static INotificationStrategy Default => new EmailNotificationService();
 }

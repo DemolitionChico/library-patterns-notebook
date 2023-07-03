@@ -7,27 +7,28 @@ namespace PatternsNotebook.Behavioral.Strategy.OrderExample.Strategies.Notificat
 
 public class SlackNotificationService : INotificationStrategy
 {
-    private readonly string _incomingWebHook;
+    private readonly Uri _incomingWebHook;
 
     public SlackNotificationService()
     {
         // this should be loaded from an actual configuration
-        _incomingWebHook = "";
+        _incomingWebHook = new Uri("", UriKind.Absolute);
     }
 
-    public void SendNotification(string data)
+    public async Task SendNotification(string data)
     {
         string payload = JsonSerializer.Serialize(new {text = data});
-        using (WebClient client = new WebClient())
+        var postParams = new Dictionary<string, string>()
         {
-            NameValueCollection config = new NameValueCollection();
-            config["payload"] = payload;
-	
-            // in a real implementation it should be made async 
-            var response = client.UploadValues(_incomingWebHook, "POST", config);
-            string responseText = new UTF8Encoding().GetString(response);
-            
-            Console.WriteLine($"Message sent ({responseText})");
-        }
+            {"payload", payload}
+        };
+
+        using HttpClient client = new HttpClient();
+        using var postContent = new FormUrlEncodedContent(postParams);
+        using var response = await client.PostAsync(_incomingWebHook, postContent);
+        response.EnsureSuccessStatusCode();
+        using HttpContent content = response.Content;
+        string responseText = await content.ReadAsStringAsync();
+        Console.WriteLine($"Message sent ({responseText})");
     }
 }
