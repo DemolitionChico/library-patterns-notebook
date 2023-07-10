@@ -3,9 +3,13 @@
 using PatternsNotebook.Behavioral.Command.CartExample.Commands;
 using PatternsNotebook.Behavioral.Command.CartExample.Repositories;
 using PatternsNotebook.Behavioral.Command.CartExample.Repositories.Models;
+using PatternsNotebook.Behavioral.Specification.MovieExample;
+using PatternsNotebook.Behavioral.State.BankAccountExample;
+using PatternsNotebook.Behavioral.State.BookingExample;
 using PatternsNotebook.Behavioral.Strategy.OrderExample;
 using PatternsNotebook.Behavioral.Strategy.OrderExample.Strategies.Export;
 using PatternsNotebook.Behavioral.Strategy.OrderExample.Strategies.Notifications;
+using static System.Threading.Tasks.Task;
 
 // STRATEGY USAGE
 // var order = new Order("Customer", 2, "Item name", true, "Optional description");
@@ -16,36 +20,66 @@ using PatternsNotebook.Behavioral.Strategy.OrderExample.Strategies.Notifications
 // order.NotifyWhenReady();
 
 // COMMAND USAGE
-ProductRepository productRepository = new ProductRepository();
-ShoppingCartRepository shoppingCartRepository = new ShoppingCartRepository();
-CommandManager manager = new CommandManager();
-
-shoppingCartRepository.Print();
-var addItem1 = new AddToCartCommand(shoppingCartRepository, productRepository, new Product("001", 0));
-var addItem2 = new AddToCartCommand(shoppingCartRepository, productRepository, new Product("002", 0));
-var addItem3 = new AddToCartCommand(shoppingCartRepository, productRepository, new Product("003", 0));
-var increaseItem1 = new ChangeQuantityCommand(ChangeQuantityCommand.Operation.Increase, shoppingCartRepository,
-    productRepository, new Product("001", 0));
-var increaseItem2 = new ChangeQuantityCommand(ChangeQuantityCommand.Operation.Increase, shoppingCartRepository,
-    productRepository, new Product("002", 0));
-var decreaseItem11 = new ChangeQuantityCommand(ChangeQuantityCommand.Operation.Decrease, shoppingCartRepository,
-    productRepository, new Product("001", 0));
-var decreaseItem12 = new ChangeQuantityCommand(ChangeQuantityCommand.Operation.Decrease, shoppingCartRepository,
-    productRepository, new Product("001", 0));
-
-manager.Invoke(addItem1);
-manager.Invoke(addItem2);
-manager.Invoke(addItem3);
-manager.Invoke(increaseItem1);
-manager.Invoke(increaseItem2);
-manager.Invoke(decreaseItem11);
-manager.Invoke(decreaseItem12);
-
-shoppingCartRepository.Print();
-
-manager.Undo();
-
-shoppingCartRepository.Print();
-
+// ProductRepository productRepository = new ProductRepository();
+// ShoppingCartRepository shoppingCartRepository = new ShoppingCartRepository();
+// CommandManager manager = new CommandManager();
+//
+// shoppingCartRepository.Print();
+// var addItem1 = new AddToCartCommand(shoppingCartRepository, productRepository, new Product("001", 0));
+// var addItem2 = new AddToCartCommand(shoppingCartRepository, productRepository, new Product("002", 0));
+// var addItem3 = new AddToCartCommand(shoppingCartRepository, productRepository, new Product("003", 0));
+// var increaseItem1 = new ChangeQuantityCommand(ChangeQuantityCommand.Operation.Increase, shoppingCartRepository,
+//     productRepository, new Product("001", 0));
+// var increaseItem2 = new ChangeQuantityCommand(ChangeQuantityCommand.Operation.Increase, shoppingCartRepository,
+//     productRepository, new Product("002", 0));
+// var decreaseItem11 = new ChangeQuantityCommand(ChangeQuantityCommand.Operation.Decrease, shoppingCartRepository,
+//     productRepository, new Product("001", 0));
+// var decreaseItem12 = new ChangeQuantityCommand(ChangeQuantityCommand.Operation.Decrease, shoppingCartRepository,
+//     productRepository, new Product("001", 0));
+//
+// manager.Invoke(addItem1);
+// manager.Invoke(addItem2);
+// manager.Invoke(addItem3);
+// manager.Invoke(increaseItem1);
+// manager.Invoke(increaseItem2);
+// manager.Invoke(decreaseItem11);
+// manager.Invoke(decreaseItem12);
+//
+// shoppingCartRepository.Print();
+//
+// manager.Undo();
+//
+// shoppingCartRepository.Print();
+// SPECIFICATION USAGE
+// var ticketsService = new TicketsService();
+// var movieSearchService = new MovieSearchService();
+//
+// ticketsService.BuyTicketForAdult("002");
+// ticketsService.BuyTicketForChild("002");
+//
+// var forChildrenOnlyFilter = new MovieFilter
+// {
+//     IsNotForChildren = true,
+//     IsOnCd = true,
+//     OrTitleContains = "extra"
+// };
+//
+// var movies = movieSearchService.GetMovies(forChildrenOnlyFilter);
+//
+// foreach (var movie in movies)
+// {
+//     Console.WriteLine(movie.Title);
+// }
+// STATE USAGE
+// var account = new BankAccount(200);
+// account.Withdraw(100);
+// account.Deposit(100);
+// account.Withdraw(500);
+// account.Withdraw(100);
+// account.Deposit(1000);
+// account.Withdraw(100);
+// account.Deposit(1000);
+// account.Deposit(100);
+// account.Withdraw(100);
 
 Console.ReadLine();
