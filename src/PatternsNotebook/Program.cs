@@ -3,6 +3,8 @@
 using PatternsNotebook.Behavioral.Command.CartExample.Commands;
 using PatternsNotebook.Behavioral.Command.CartExample.Repositories;
 using PatternsNotebook.Behavioral.Command.CartExample.Repositories.Models;
+using PatternsNotebook.Behavioral.Mediator.ChatRoomExample;
+using PatternsNotebook.Behavioral.Observer.OrderStateChangeExample;
 using PatternsNotebook.Behavioral.Specification.MovieExample;
 using PatternsNotebook.Behavioral.State.BankAccountExample;
 using PatternsNotebook.Behavioral.State.BookingExample;
@@ -50,6 +52,7 @@ using static System.Threading.Tasks.Task;
 // manager.Undo();
 //
 // shoppingCartRepository.Print();
+
 // SPECIFICATION USAGE
 // var ticketsService = new TicketsService();
 // var movieSearchService = new MovieSearchService();
@@ -70,6 +73,7 @@ using static System.Threading.Tasks.Task;
 // {
 //     Console.WriteLine(movie.Title);
 // }
+
 // STATE USAGE
 // var account = new BankAccount(200);
 // account.Withdraw(100);
@@ -81,5 +85,31 @@ using static System.Threading.Tasks.Task;
 // account.Deposit(1000);
 // account.Deposit(100);
 // account.Withdraw(100);
+
+// MEDIATOR USAGE
+// var teamChat = new TeamChatRoom();
+// var peter = new Developer("Peter");
+// var michael = new Developer("Michael");
+// var mark = new Tester("Mark");
+// var ann = new Tester("Ann");
+// teamChat.RegisterMembers(peter, michael, mark, ann);
+//
+// michael.Send("Hi, I'm planning the deployment on friday afternoon");
+// ann.Send("That's a great idea!");
+//
+// mark.SendTo<Developer>("I'm only writing to developers");
+
+// OBSERVER USAGE
+var order = new StateNotifyingOrder();
+var mailService = new MailNotificationService();
+var deliveryService = new DeliveryService();
+
+order.AddObserver(mailService);
+order.AddObserver(deliveryService);
+
+order.SettlePayment();
+order.StartProcessing();
+order.Send();
+
 
 Console.ReadLine();

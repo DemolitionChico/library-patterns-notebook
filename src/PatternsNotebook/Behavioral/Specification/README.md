@@ -86,3 +86,4 @@ internal sealed class AndSpecification<T> : Specification<T>
 
 ### Other useful examples
 - Combining lambda expressions
+- Mocking IQueryable interface
