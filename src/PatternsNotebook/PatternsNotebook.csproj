@@ -11,4 +11,10 @@
       <Folder Include="Structural\" />
     </ItemGroup>
 
+    <ItemGroup>
+      <None Update="Behavioral\TemplateMethod\ParserExample\example.xml">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
+    </ItemGroup>
+
 </Project>

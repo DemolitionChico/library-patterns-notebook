@@ -22,6 +22,10 @@ public interface IHandler<T>
 #### Concrete handler
 Handles the request if possible. Can access the successor and potentially pass the request on
 
+#### Variant 
+Handler can also register a list of receivers, so that each receiver (formerly handler) is not aware of its successor.
+Then the handler passes request to each receiver within the list sequentially. 
+
 #### Client
 Initiates the request to a concrete handler object
 

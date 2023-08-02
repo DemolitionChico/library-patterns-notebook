@@ -12,6 +12,9 @@ using PatternsNotebook.Behavioral.State.BookingExample;
 using PatternsNotebook.Behavioral.Strategy.OrderExample;
 using PatternsNotebook.Behavioral.Strategy.OrderExample.Strategies.Export;
 using PatternsNotebook.Behavioral.Strategy.OrderExample.Strategies.Notifications;
+using PatternsNotebook.Behavioral.TemplateMethod;
+using PatternsNotebook.Behavioral.TemplateMethod.FirearmsExample;
+using PatternsNotebook.Behavioral.TemplateMethod.ParserExample;
 using static System.Threading.Tasks.Task;
 
 // STRATEGY USAGE
@@ -113,25 +116,36 @@ using static System.Threading.Tasks.Task;
 // order.Send();
 
 // CHAIN OF RESPONSIBILITY USAGE
-var validDocument = new Document("Valid document title", DateTimeOffset.UtcNow, true, true);
-var invalidDocument = new Document("Valid title No 2", DateTimeOffset.UtcNow, false, true);
+// var validDocument = new Document("Valid document title", DateTimeOffset.UtcNow, true, true);
+// var invalidDocument = new Document("Valid title No 2", DateTimeOffset.UtcNow, false, true);
+//
+// var validationChain = new DocumentTitleHandler();
+// validationChain
+//     .SetSuccessor(new DocumentLastModifiedHandler())
+//     .SetSuccessor(new DocumentApprovedByLitigationHandler())
+//     .SetSuccessor(new DocumentApprovedByManagementHandler());
+//
+// try
+// {
+//     validationChain.Handle(validDocument);
+//     Console.WriteLine($"Document \"{validDocument.Title}\" validated.");
+//     validationChain.Handle(invalidDocument);
+//     Console.WriteLine($"Document \"{invalidDocument.Title}\" validated.");
+// }
+// catch (Exception e)
+// {
+//     Console.WriteLine(e.Message);
+// }
 
-var validationChain = new DocumentTitleHandler();
-validationChain
-    .SetSuccessor(new DocumentLastModifiedHandler())
-    .SetSuccessor(new DocumentApprovedByLitigationHandler())
-    .SetSuccessor(new DocumentApprovedByManagementHandler());
-
-try
-{
-    validationChain.Handle(validDocument);
-    Console.WriteLine($"Document \"{validDocument.Title}\" validated.");
-    validationChain.Handle(invalidDocument);
-    Console.WriteLine($"Document \"{invalidDocument.Title}\" validated.");
-}
-catch (Exception e)
-{
-    Console.WriteLine(e.Message);
-}
+// TEMPLATE METHOD USAGE
+// var pistolShooter = new CzShadowShooter();
+// var rifleShooter = new AK74Shooter();
+//
+// pistolShooter.Shoot();
+// rifleShooter.Shoot();
+var jsonWebParser = new JsonWebProductLoaderAndParser("https://dummyjson.com/products/1");
+Console.WriteLine(jsonWebParser.LoadAndParse());
+var xmlParser = new XmlFileLoaderAndParser("Behavioral/TemplateMethod/ParserExample/example.xml");
+Console.WriteLine(xmlParser.LoadAndParse().ToString());
 
 Console.ReadLine();
