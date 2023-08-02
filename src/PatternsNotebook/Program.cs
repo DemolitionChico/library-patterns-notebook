@@ -1,5 +1,6 @@
 ﻿// See https://aka.ms/new-console-template for more information
 
+using PatternsNotebook.Behavioral.ChainOfResponsibility.DocumentValidationExample;
 using PatternsNotebook.Behavioral.Command.CartExample.Commands;
 using PatternsNotebook.Behavioral.Command.CartExample.Repositories;
 using PatternsNotebook.Behavioral.Command.CartExample.Repositories.Models;
@@ -100,16 +101,37 @@ using static System.Threading.Tasks.Task;
 // mark.SendTo<Developer>("I'm only writing to developers");
 
 // OBSERVER USAGE
-var order = new StateNotifyingOrder();
-var mailService = new MailNotificationService();
-var deliveryService = new DeliveryService();
+// var order = new StateNotifyingOrder();
+// var mailService = new MailNotificationService();
+// var deliveryService = new DeliveryService();
+//
+// order.AddObserver(mailService);
+// order.AddObserver(deliveryService);
+//
+// order.SettlePayment();
+// order.StartProcessing();
+// order.Send();
 
-order.AddObserver(mailService);
-order.AddObserver(deliveryService);
+// CHAIN OF RESPONSIBILITY USAGE
+var validDocument = new Document("Valid document title", DateTimeOffset.UtcNow, true, true);
+var invalidDocument = new Document("Valid title No 2", DateTimeOffset.UtcNow, false, true);
 
-order.SettlePayment();
-order.StartProcessing();
-order.Send();
+var validationChain = new DocumentTitleHandler();
+validationChain
+    .SetSuccessor(new DocumentLastModifiedHandler())
+    .SetSuccessor(new DocumentApprovedByLitigationHandler())
+    .SetSuccessor(new DocumentApprovedByManagementHandler());
 
+try
+{
+    validationChain.Handle(validDocument);
+    Console.WriteLine($"Document \"{validDocument.Title}\" validated.");
+    validationChain.Handle(invalidDocument);
+    Console.WriteLine($"Document \"{invalidDocument.Title}\" validated.");
+}
+catch (Exception e)
+{
+    Console.WriteLine(e.Message);
+}
 
 Console.ReadLine();
