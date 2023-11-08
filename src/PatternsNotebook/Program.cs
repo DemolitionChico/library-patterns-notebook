@@ -1,5 +1,7 @@
 ﻿// See https://aka.ms/new-console-template for more information
 
+using PatternsNotebook.Behavioral.Bridge.LicensesExample;
+using PatternsNotebook.Behavioral.Bridge.MenuExample;
 using PatternsNotebook.Behavioral.ChainOfResponsibility.DocumentValidationExample;
 using PatternsNotebook.Behavioral.Command.CartExample.Commands;
 using PatternsNotebook.Behavioral.Command.CartExample.Repositories;
@@ -14,7 +16,7 @@ using PatternsNotebook.Behavioral.Strategy.OrderExample.Strategies.Export;
 using PatternsNotebook.Behavioral.Strategy.OrderExample.Strategies.Notifications;
 using PatternsNotebook.Behavioral.TemplateMethod;
 using PatternsNotebook.Behavioral.TemplateMethod.FirearmsExample;
-using PatternsNotebook.Behavioral.TemplateMethod.ParserExample;
+using PatternsNotebook.Behavioral.TemplateMethod.ParserExample;using PatternsNotebook.Behavioral.Visitor.DiscountExample;
 using static System.Threading.Tasks.Task;
 
 // STRATEGY USAGE
@@ -143,9 +145,13 @@ using static System.Threading.Tasks.Task;
 //
 // pistolShooter.Shoot();
 // rifleShooter.Shoot();
-var jsonWebParser = new JsonWebProductLoaderAndParser("https://dummyjson.com/products/1");
-Console.WriteLine(jsonWebParser.LoadAndParse());
-var xmlParser = new XmlFileLoaderAndParser("Behavioral/TemplateMethod/ParserExample/example.xml");
-Console.WriteLine(xmlParser.LoadAndParse().ToString());
+// var jsonWebParser = new JsonWebProductLoaderAndParser("https://dummyjson.com/products/1");
+// Console.WriteLine(jsonWebParser.LoadAndParse());
+// var xmlParser = new XmlFileLoaderAndParser("Behavioral/TemplateMethod/ParserExample/example.xml");
+// Console.WriteLine(xmlParser.LoadAndParse().ToString());
 
-Console.ReadLine();
+// BRIDGE EXAMPLE
+// new BridgeLicensesExample().Run();
+// new BridgeMenusExample().Run();
+// VISITOR EXAMPLE
+new VisitorCartExample().Run();
